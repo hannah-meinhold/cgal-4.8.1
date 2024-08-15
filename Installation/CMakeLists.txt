@@ -36,25 +36,28 @@ endif()
 
 message( "== Setting paths ==" )
 
+message("cmake source dir" ${CMAKE_SOURCE_DIR})
+message("cmake current source dir" ${CMAKE_CURRENT_SOURCE_DIR})
+
 if ( CGAL_BRANCH_BUILD )
 
   message( STATUS "Build CGAL from ${CGAL_SCM_NAME}-branch: ${CGAL_SCM_BRANCH_NAME}" )
 
   # list packages
-  file(GLOB CGAL_CONFIGURED_PACKAGES RELATIVE ${CMAKE_SOURCE_DIR} "${CMAKE_SOURCE_DIR}/*")
+  file(GLOB CGAL_CONFIGURED_PACKAGES RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "${CMAKE_CURRENT_SOURCE_DIR}/*")
   list(REMOVE_ITEM CGAL_CONFIGURED_PACKAGES copyright CMakeLists.txt .svn .git)
 
   # detect and remove not existing package-directories
   foreach (package ${CGAL_CONFIGURED_PACKAGES})
-    if (NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/${package}")
+    if (NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${package}")
       list(APPEND CGAL_WRONG_PACKAGES ${package})
-    elseif(NOT IS_DIRECTORY "${CMAKE_SOURCE_DIR}/${package}/package_info")
+    elseif(NOT IS_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/${package}/package_info")
       list(APPEND CGAL_WRONG_PACKAGES ${package})
     endif()
   endforeach()
 
   find_program(CGAL_CREATE_CMAKE_SCRIPT cgal_create_cmake_script
-               HINT ${CMAKE_SOURCE_DIR}/Scripts/scripts
+               HINT ${CMAKE_CURRENT_SOURCE_DIR}/Scripts/scripts
 	       DOC "Script cgal_create_cmake_script, that creates CMakeLists.txt files"
 	       NO_DEFAULT_PATH
 	       NO_CMAKE_ENVIRONMENT_PATH)
@@ -67,7 +70,7 @@ if ( CGAL_BRANCH_BUILD )
   set(CGAL_CONFIGURED_PACKAGES_NAMES ${CGAL_CONFIGURED_PACKAGES})
   set(CGAL_CONFIGURED_PACKAGES)
   foreach (package ${CGAL_CONFIGURED_PACKAGES_NAMES})
-    list(APPEND CGAL_CONFIGURED_PACKAGES "${CMAKE_SOURCE_DIR}/${package}")
+    list(APPEND CGAL_CONFIGURED_PACKAGES "${CMAKE_CURRENT_SOURCE_DIR}/${package}")
   endforeach()
 
 
@@ -99,7 +102,7 @@ else ( CGAL_BRANCH_BUILD )
 
 endif (CGAL_BRANCH_BUILD )
 
-#message(STATUS "Packages found: ${CGAL_CONFIGURED_PACKAGES}")
+message(STATUS "Packages found: ${CGAL_CONFIGURED_PACKAGES}")
 
 list(SORT CGAL_CONFIGURED_PACKAGES_NAMES)
 if(IS_DIRECTORY "${CMAKE_SOURCE_DIR}/Documentation")

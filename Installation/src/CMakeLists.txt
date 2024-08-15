@@ -1,3 +1,8 @@
+message("cgal configured packages")
+foreach (package ${CGAL_CONFIGURED_PACKAGES} )
+    message("package:" package)
+endforeach()
+
 function (collect_cgal_library LIBRARY_NAME ADDITIONAL_FILES)
   # IMPORTANT: First delete all_files.cpp
   if (EXISTS ${CMAKE_CURRENT_BINARY_DIR}/all_files.cpp)
