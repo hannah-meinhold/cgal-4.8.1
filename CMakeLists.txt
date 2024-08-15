@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 2.8.11)
 option( CGAL_BRANCH_BUILD "Create CGAL from branch" ON)
 mark_as_advanced( CGAL_BRANCH_BUILD )
 
-include(${CMAKE_SOURCE_DIR}/Installation/cmake/modules/CGAL_SCM.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/Installation/cmake/modules/CGAL_SCM.cmake)
 
 # add option for duplicate file detection
 option( CGAL_REPORT_DUPLICATE_FILES "Switch on to start (naive) detection of duplicate source- and headerfiles in packages" OFF)
